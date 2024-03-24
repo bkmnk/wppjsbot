@@ -143,6 +143,7 @@ app.get("/", async (req, res) => {
   // client.sendMessage(chatId, pollMessage);
 
   /* TEXT */
+  console.log("sending message: ", message);
   client.sendMessage(chatId, message);
   res.send(`mensagem enviada ${chatId}`);
 });
@@ -166,12 +167,8 @@ app.listen(PORT, () => {
     try {
       console.log("message received: ", msg.body);
       const chatId = msg.from;
-      const parsedMessage = encodeURI(msg.body);
-      axios.get(`${WEBHOOK_URL}?chatId=${chatId}&msg=${parsedMessage}`);
-      console.log(
-        "req",
-        `${WEBHOOK_URL}?chatId=${chatId}&msg=${parsedMessage}`
-      );
+      axios.get(`${WEBHOOK_URL}?chatId=${chatId}&msg=${msg.body}`);
+      console.log("req", `${WEBHOOK_URL}?chatId=${chatId}&msg=${msg.body}`);
     } catch (e) {
       console.log("1");
       console.log(e);
@@ -183,12 +180,9 @@ app.listen(PORT, () => {
       console.log("message sent: ", msg.body);
       if (msg.body === "oi") {
         const chatId = msg.from;
-        const parsedMessage = encodeURI(msg.body);
-        axios.get(`${WEBHOOK_URL}?chatId=${chatId}&msg=${parsedMessage}`);
-        console.log(
-          "req",
-          `${WEBHOOK_URL}?chatId=${chatId}&msg=${parsedMessage}`
-        );
+
+        axios.get(`${WEBHOOK_URL}?chatId=${chatId}&msg=${msg.body}`);
+        console.log("req", `${WEBHOOK_URL}?chatId=${chatId}&msg=${msg.body}`);
       }
     } catch (e) {
       console.log(e);
