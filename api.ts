@@ -165,8 +165,13 @@ app.listen(PORT, () => {
   client.on("message", (msg) => {
     try {
       console.log("message received: ", msg.body);
-      const chatOd = msg.from;
-      axios.get(`${WEBHOOK_URL}?chatId=${chatOd}&msg=${msg.body}`);
+      const chatId = msg.from;
+      const parsedMessage = encodeURI(msg.body);
+      axios.get(`${WEBHOOK_URL}?chatId=${chatId}&msg=${parsedMessage}`);
+      console.log(
+        "req",
+        `${WEBHOOK_URL}?chatId=${chatId}&msg=${parsedMessage}`
+      );
     } catch (e) {
       console.log("1");
       console.log(e);
@@ -178,7 +183,12 @@ app.listen(PORT, () => {
       console.log("message sent: ", msg.body);
       if (msg.body === "oi") {
         const chatId = msg.from;
-        axios.get(`${WEBHOOK_URL}?chatId=${chatId}&msg=${msg.body}`);
+        const parsedMessage = encodeURI(msg.body);
+        axios.get(`${WEBHOOK_URL}?chatId=${chatId}&msg=${parsedMessage}`);
+        console.log(
+          "req",
+          `${WEBHOOK_URL}?chatId=${chatId}&msg=${parsedMessage}`
+        );
       }
     } catch (e) {
       console.log(e);
